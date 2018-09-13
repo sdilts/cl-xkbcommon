@@ -5,5 +5,7 @@
   :defsystem-depends-on (#:cffi-grovel)
   :depends-on (#:cffi #:cffi-grovel)
   :serial t
-  :components ((:cffi-grovel-file "xkbcommon-grovel")
-	       (:file "xkbcommon")))
+  :components ((:file "package")
+	       (:cffi-grovel-file "xkbcommon-grovel")
+	       (:file "xkbcommon")
+	       (:file  "xkb-helpers")))
