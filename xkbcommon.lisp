@@ -120,6 +120,7 @@
   (key keycode))
 
 (defcfun ("xkb_state_key_get_syms" state-key-get-syms) :int
+  (state (:pointer (:struct state)))
   (key keycode)
   (syms_out (:pointer (:pointer keysym))))
 
