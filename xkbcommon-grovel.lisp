@@ -16,8 +16,6 @@
 	      ((:scroll "XKB_LED_NAME_SCROLL")))
 
 
-(ctype size-t "size_t")
-
 (ctype keycode "xkb_keycode_t")
 
 (ctype keysym "xkb_keysym_t")
