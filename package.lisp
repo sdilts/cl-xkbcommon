@@ -39,4 +39,7 @@
 	   #:state
 	   ;; conditions
 	   #:context-creation-error
-	   #:keymap-creation-error))
+	   #:keymap-creation-error
+	   ;; macros
+	   #:with-keymap-from-names
+	   #:with-xkb-context))

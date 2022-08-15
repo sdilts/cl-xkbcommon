@@ -56,18 +56,6 @@
   (names (:pointer (:struct rule-names)))
   (flags compile-flags))
 
-(defun new-context (context-flags)
-  (let ((context (xkb-context-new context-flags)))
-    (when (cffi:null-pointer-p context)
-      (error 'context-creation-error))
-    context))
-
-(defun new-keymap-from-names (context names flags)
-  (let ((keymap (xkb-keymap-new-from-names context names flags)))
-    (when (cffi:null-pointer-p keymap)
-      (error 'keymap-creation-error))
-    keymap))
-
 (defcfun ("xkb_keymap_unref" keymap-unref) :void
   (keymap (:pointer (:struct keymap))))
 
@@ -86,3 +74,25 @@
 (defcfun ("xkb_keymap_key_get_name" keymap-key-get-name) :string
   (keymap (:pointer (:struct keymap)))
   (key keycode))
+
+(defun new-context (context-flags)
+  (let ((context (xkb-context-new context-flags)))
+    (when (cffi:null-pointer-p context)
+      (error 'context-creation-error))
+    context))
+
+(defun new-keymap-from-names (context names flags)
+  (let ((keymap (xkb-keymap-new-from-names context names flags)))
+    (when (cffi:null-pointer-p keymap)
+      (error 'keymap-creation-error))
+    keymap))
+
+(defmacro with-keymap-from-names ((keymap-name (context rules flags)) &body body)
+  `(let ((,keymap-name (new-keymap-from-names ,context ,rules ,flags)))
+     ,@body
+     (keymap-unref ,keymap-name)))
+
+(defmacro with-xkb-context ((context-name (flags)) &body body)
+  `(let ((,context-name (new-context ,flags)))
+     ,@body
+     (context-unref ,context-name)))

@@ -7,5 +7,4 @@
   :serial t
   :components ((:file "package")
 	       (:cffi-grovel-file "xkbcommon-grovel")
-	       (:file "xkbcommon")
-	       (:file  "xkb-helpers")))
+	       (:file "xkbcommon")))
