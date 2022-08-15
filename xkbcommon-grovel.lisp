@@ -32,6 +32,8 @@
 
 (ctype led-index "xkb_led_index_t")
 
+(ctype led-index-mask "xkb_led_mask_t")
+
 (bitfield invalid-masks
 	  ((:keycode-invalid "XKB_KEYCODE_INVALID"))
 	  ((:layout-invalid "XKB_LAYOUT_INVALID"))
