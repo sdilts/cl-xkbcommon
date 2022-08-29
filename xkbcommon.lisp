@@ -26,11 +26,16 @@
 
 (defcstruct state)
 
-
-(defcfun ("xkb_keysym_get_name" keysym-get-name) :int
+(declaim (inline xkb-keysym-get-name))
+(defcfun "xkb_keysym_get_name" :int
   (keysym keysym)
   (buffer (:pointer :char))
   (size :size))
+
+(defun keysym-get-name (keysym)
+  (declare (type (unsigned-byte 32) keysym))
+  (cffi:with-foreign-pointer-as-string ((buffer size) 10)
+    (xkb-keysym-get-name keysym buffer size)))
 
 (defcfun ("xkb_keysym_from_name" keysym-from-name) keysym
   (name :string)
