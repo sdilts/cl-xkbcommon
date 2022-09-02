@@ -37,9 +37,18 @@
   (cffi:with-foreign-pointer-as-string ((buffer size) 10)
     (xkb-keysym-get-name keysym buffer size)))
 
-(defcfun ("xkb_keysym_from_name" keysym-from-name) keysym
+(declaim (inline xkb-keysym-from-name))
+(defcfun "xkb_keysym_from_name" keysym
   (name :string)
   (flags keysym-flags))
+
+(defun keysym-from-name (name flags)
+  (declare (optimize (speed 3) (safety 1)))
+  (let ((code (xkb-keysym-from-name name flags)))
+    (declare (type (unsigned-byte 32) code))
+    (if (eq code 0)
+	nil
+	code)))
 
 (defcfun ("xkb_keysym_to_utf8" keysym-to-utf8) :int
   (keysym keysym)
