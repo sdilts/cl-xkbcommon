@@ -46,7 +46,7 @@
   (declare (optimize (speed 3) (safety 1)))
   (let ((code (xkb-keysym-from-name name flags)))
     (declare (type (unsigned-byte 32) code))
-    (if (eq code 0)
+    (if (= code 0)
 	nil
 	code)))
 
