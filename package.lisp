@@ -14,6 +14,9 @@
 	   #:state-key-get-syms
 	   #:state-key-get-one-sym
 	   #:state-key-get-syms
+	   #:keymap-num-mods
+	   #:keymap-mod-get-name
+	   #:keymap-mod-get-index
 	   ;; enums, structs, ect
 	   #:mod-index
 	   #:mod-mask

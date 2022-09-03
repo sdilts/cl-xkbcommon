@@ -112,3 +112,14 @@
      (unwind-protect
 	  (progn ,@body)
        (context-unref ,context-name))))
+
+(defcfun ("xkb_keymap_num_mods" keymap-num-mods) mod-index
+  (keymap (:pointer (:struct keymap))))
+
+(defcfun ("xkb_keymap_mod_get_name" keymap-mod-get-name) :string
+  (keymap (:pointer (:struct keymap)))
+  (index mod-index))
+
+(defcfun ("xkb_keymap_mod_get_index" keymap-mod-get-index) mod-index
+  (keymap (:pointer (:struct keymap)))
+  (name :string))
