@@ -34,7 +34,7 @@
 
 (defun keysym-get-name (keysym)
   (declare (type (unsigned-byte 32) keysym))
-  (cffi:with-foreign-pointer-as-string ((buffer size) 10)
+  (cffi:with-foreign-pointer-as-string ((buffer size) 15)
     (xkb-keysym-get-name keysym buffer size)))
 
 (declaim (inline xkb-keysym-from-name))
