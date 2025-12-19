@@ -113,6 +113,33 @@
 	  (progn ,@body)
        (context-unref ,context-name))))
 
+(defmacro with-xkb-rule-names ((rule-name (&key (rules "")
+						(model "")
+						(layout "")
+						(variant "")
+						(options "")))
+			       &body body)
+  "Bind RULE-NAME to a struct xkb_rule_names object within
+the context and  initalize it's fields using the supplied values."
+  (let ((rules-ptr (gensym "rules-ptr"))
+	(model-ptr (gensym "model-ptr"))
+	(layout-ptr (gensym "layout-ptr"))
+	(variant-ptr (gensym "variant-ptr"))
+	(options-ptr (gensym "options")))
+    `(cffi:with-foreign-object (,rule-name '(:struct rule-names))
+       (cffi:with-foreign-strings ((,rules-ptr ,rules)
+				   (,model-ptr ,model)
+				   (,layout-ptr ,layout)
+				   (,variant-ptr ,variant)
+				   (,options-ptr ,options))
+	 (setf (cffi:foreign-slot-value ,rule-name '(:struct rule-names) :rules) ,rules-ptr
+	       (cffi:foreign-slot-value ,rule-name '(:struct rule-names) :model) ,model-ptr
+	       (cffi:foreign-slot-value ,rule-name '(:struct rule-names) :layout) ,layout-ptr
+	       (cffi:foreign-slot-value ,rule-name '(:struct rule-names) :variant) ,variant-ptr
+	       (cffi:foreign-slot-value ,rule-name '(:struct rule-names) :options) ,options-ptr)
+	 ,@body))))
+
+
 (defcfun ("xkb_keymap_num_mods" keymap-num-mods) mod-index
   (keymap (:pointer (:struct keymap))))
 

@@ -45,4 +45,5 @@
 	   #:keymap-creation-error
 	   ;; macros
 	   #:with-keymap-from-names
-	   #:with-xkb-context))
+	   #:with-xkb-context
+	   #:with-xkb-rule-names))
