@@ -61,6 +61,18 @@
        ((:no-evironment-names "XKB_CONTEXT_NO_ENVIRONMENT_NAMES")
 	:documentation "Don't take RMLVO names from the environment."))
 
+(cenum log-level
+       ((:critcal "XKB_LOG_LEVEL_CRITICAL")
+	:documentation "Log critical internal errors only.")
+       ((:error "XKB_LOG_LEVEL_ERROR")
+	:documentation "Log all errors.")
+       ((:warning "XKB_LOG_LEVEL_WARNING")
+	:documentation "Log warnings and errors.")
+       ((:info "XKB_LOG_LEVEL_INFO")
+	:documentation "Log information, warnings, and errors.")
+       ((:debug "XKB_LOG_LEVEL_DEBUG")
+	:documentation "Log everything."))
+
 (cenum compile-flags
        ((:no-flags "XKB_KEYMAP_COMPILE_NO_FLAGS")))
 

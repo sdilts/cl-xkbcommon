@@ -108,6 +108,22 @@
 (defcfun ("xkb_context_unref" context-unref) :void
   (context (:pointer (:struct context))))
 
+(defcfun ("xkb_context_set_log_level" context-set-log-level) :void
+  (context (:pointer (:struct context)))
+  (level log-level))
+
+(defcfun ("xkb_context_get_log_level" context-get-log-level) log-level
+  (context (:pointer (:struct context))))
+
+(defcfun ("xkb_context_set_log_verbosity" context-set-log-verbosity) :void
+  "Set the current logging verbosity. Useful when developing keymaps
+or other advanced usages"
+  (context (:pointer (:struct context)))
+  (verbosit :int))
+
+(defcfun ("xkb_context_get_log_verbosity" context-get-log-verbosity) :int
+  (context (:pointer (:struct context))))
+
 (defcfun ("xkb_state_key_get_one_sym" state-key-get-one-sym) keysym
   (state (:pointer (:struct state)))
   (key keycode))
