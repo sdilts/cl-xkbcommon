@@ -19,6 +19,18 @@
 	     (declare (ignore condition))
 	     (format stream "Could not create the xkb context"))))
 
+(define-condition invalid-keysym-name (warning)
+  ((name :initarg :name :reader invalid-keymap-name-name))
+  (:report (lambda (condition stream)
+	     (format stream "Keymap name ~S is invalid"
+		     (invalid-keymap-name-name condition)))))
+
+(define-condition invalid-keysym-code (warning)
+  ((keysym :initarg :keysym :reader invalid-keysym-code-code))
+  (:report (lambda (condition stream)
+	     (format stream "Keysym code ~S is invalid"
+		     (invalid-keysym-code-code condition)))))
+
 ;; a couple of opaque structs:
 (defcstruct keymap)
 
@@ -37,18 +49,38 @@
   (cffi:with-foreign-pointer-as-string ((buffer size) 15)
     (xkb-keysym-get-name keysym buffer size)))
 
+(define-compiler-macro keysym-get-name (&whole whole keysym)
+  (if (constantp keysym)
+      (let ((name (keysym-get-name keysym)))
+	(if name
+	    name
+	    (progn
+	      (warn 'invalid-keysym-code :keysym keysym)
+	      name)))
+      whole))
+
 (declaim (inline xkb-keysym-from-name))
 (defcfun "xkb_keysym_from_name" keysym
   (name :string)
   (flags keysym-flags))
 
-(defun keysym-from-name (name flags)
+(defun keysym-from-name (name &optional (flags :no-flags))
   (declare (optimize (speed 3) (safety 1)))
   (let ((code (xkb-keysym-from-name name flags)))
     (declare (type (unsigned-byte 32) code))
     (if (= code 0)
 	nil
 	code)))
+
+(define-compiler-macro keysym-from-name (&whole whole name &optional (flags :no-flags))
+  (if (and (constantp name)  (constantp flags))
+      (let ((keysym (keysym-from-name name flags)))
+	(if keysym
+	    keysym
+	    (progn
+	      (warn 'invalid-keysym-name :name name)
+	      keysym)))
+	whole))
 
 (defcfun ("xkb_keysym_to_utf8" keysym-to-utf8) :int
   (keysym keysym)
@@ -120,7 +152,7 @@
 						(options "")))
 			       &body body)
   "Bind RULE-NAME to a struct xkb_rule_names object within
-the context and  initalize it's fields using the supplied values."
+the context and initalize its fields using the supplied values."
   (let ((rules-ptr (gensym "rules-ptr"))
 	(model-ptr (gensym "model-ptr"))
 	(layout-ptr (gensym "layout-ptr"))
