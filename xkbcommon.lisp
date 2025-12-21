@@ -100,7 +100,7 @@
 (defcfun "xkb_keymap_new_from_names" (:pointer (:struct keymap))
   (context (:pointer (:struct context)))
   (names (:pointer (:struct rule-names)))
-  (flags compile-flags))
+  (flags keymap-compile-flags))
 
 (defcfun ("xkb_keymap_unref" keymap-unref) :void
   (keymap (:pointer (:struct keymap))))

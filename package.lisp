@@ -33,7 +33,7 @@
 	   #:rule-names
 	   #:keysym-flags
 	   #:context-flags
-	   #:compile-flags
+	   #:keymap-compile-flags
 	   #:state-component
 	   #:state-match
 	   #:consumed-mode

@@ -73,7 +73,7 @@
        ((:debug "XKB_LOG_LEVEL_DEBUG")
 	:documentation "Log everything."))
 
-(cenum compile-flags
+(cenum keymap-compile-flags
        ((:no-flags "XKB_KEYMAP_COMPILE_NO_FLAGS")))
 
 (cenum state-component
