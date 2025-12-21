@@ -1,8 +1,9 @@
 (asdf:defsystem #:xkbcommon
-  :description "FFI bindings for xkbcommon"
+  :description
+  "FFI bindings for xkbcommon with convenience functions and macros."
   :author "Stuart Dilts"
   :license "MIT"
-  :version "0.1.0"
+  :version "0.2.0"
   :defsystem-depends-on (#:cffi-grovel)
   :depends-on (#:cffi #:cffi-grovel)
   :serial t
